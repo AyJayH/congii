@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: congii
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username:
+    password:
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 266087605833-hl5h6eeb63nrih2nmbgrp75kv6123gj8.apps.googleusercontent.com
+            client-secret: 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
