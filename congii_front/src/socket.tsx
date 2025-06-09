@@ -7,6 +7,8 @@ const WebSocketComponent: React.FC = () => {
   const [received, setReceived] = useState<string[]>([]);
   const lastKeyRef = useRef<string | null>(null);
 
+  class documentModification{constructor(public character: String, public position: number, public operation: String){}}; 
+
   useEffect(() => {
     socketRef.current = new WebSocket('ws://172.20.10.4:8080/websocket'); //Cannot be local host
     socketRef.current = new WebSocket('ws://localhost:8080/websocket'); //Cannot be local host
@@ -29,9 +31,10 @@ const WebSocketComponent: React.FC = () => {
     };
   }, []);
 
-  const sendChar = (info: string) => {
+  const sendChar = (info: documentModification) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      socketRef.current.send(info);
+      socketRef.current.send(JSON.stringify(info));
+      console.log(info);
     } else {
       console.error('WebSocket is not open');
     }
@@ -40,7 +43,8 @@ const WebSocketComponent: React.FC = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     lastKeyRef.current = e.key;
     if (lastKeyRef.current === 'Enter') {
-        sendChar('Newline');
+
+        sendChar(new documentModification('Newline', 0, 'INSERT'));
     } 
   };
 
@@ -55,13 +59,13 @@ const WebSocketComponent: React.FC = () => {
       // Deletion detected
       const deleted = getDeletedCharacters(prevMessage, newValue);
       deleted.forEach(({ char, index }) =>
-        sendChar(`(deleted '${char}' at ${index})`)
+        sendChar(new documentModification(char, index, 'DELETE'))
       );
     } else {
       // Addition
       const addedChar = getAddedCharacter(prevMessage, newValue);
       if (addedChar.char) {
-        sendChar(`(added '${addedChar.char}' at ${addedChar.index})`);
+        sendChar(new documentModification(addedChar.char, addedChar.index, 'INSERT'));
       }
     }
 
@@ -114,7 +118,7 @@ const WebSocketComponent: React.FC = () => {
       <button
         onClick={() => {
           if (message) {
-            sendChar(`(full message: "${message}")`);
+            //sendChar(`(full message: "${message}")`);
             setMessage('');
             setPrevMessage('');
           }
