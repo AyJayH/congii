@@ -13,3 +13,9 @@
   justify-content: center;
   height: 100vh;
 }
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

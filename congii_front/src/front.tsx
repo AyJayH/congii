@@ -1,6 +1,11 @@
 import './Front.css'
 
+import { useNavigate } from "react-router-dom";
+
 function Front(){
+
+      const navigate = useNavigate();
+
 
     const userStatusBox = (
         <div className="flex w-full border-t bg-gray-900 items-center absolute bottom-0">
@@ -45,27 +50,31 @@ function Front(){
     return (
         <div className = "w-screen h-screen flex">
             <div className="w-[30vw] h-screen bg-gray-800 flex flex-col justify-center items-center p-4 space-y-4">
-                <div className="box bg-amber-300 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab">
-                    {interactiveBox}
+                <div className="box bg-amber-300 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab"
+                onClick = {() => navigate("/page/1")}>
                     {userStatusBox} 
                     {openEditDocument}
                 </div>
-                <div className="box bg-amber-600 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab">
+                <div className="box bg-amber-600 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab"
+                onClick = {() => navigate("/page/2")}>
                     {userStatusBox} 
                     {openEditDocument}
                 </div>
             </div>
             <div className = "w-[40vw] h-screen bg-gray-800 py-4">
-                <div className = "box bg-amber-200 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab">
+                <div className = "box bg-amber-200 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab"
+                onClick = {() => navigate("/page/shared")}>
                     {/* {userStatusBox}  */}
                     {openEditDocument}
                 </div>
             </div>
             <div className="w-[30vw] h-screen bg-gray-800 flex flex-col justify-center items-center p-4 space-y-4">
-                <div className="box bg-amber-300 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab">
+                <div className="box bg-amber-300 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab"
+                onClick = {() => navigate("/page/3")}>
                     {userStatusBox} 
                 </div>
-                <div className="box bg-amber-600 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab">
+                <div className="box bg-amber-600 group hover:brightness-75 hover:scale-90 duration-300 hover:cursor-grab"
+                onClick = {() => navigate("/page/4")}>
                     {userStatusBox} 
                 </div>
             </div>

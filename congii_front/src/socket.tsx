@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 const WebSocketComponent: React.FC = () => {
   const socketRef = useRef<WebSocket | null>(null);
   const [message, setMessage] = useState<string>('');
+  const [globalText, setGlobalText] = useState<string>('');
   const [prevMessage, setPrevMessage] = useState<string>('');
   const [received, setReceived] = useState<string[]>([]);
   const lastKeyRef = useRef<string | null>(null);
@@ -20,6 +21,7 @@ const WebSocketComponent: React.FC = () => {
 
     socketRef.current.onmessage = (event: MessageEvent) => {
       setReceived(prev => [...prev, event.data]);
+      handleGlobalMessage(event);
     };
 
     socketRef.current.onclose = () => {
@@ -44,12 +46,21 @@ const WebSocketComponent: React.FC = () => {
     lastKeyRef.current = e.key;
     if (lastKeyRef.current === 'Enter') {
 
-        sendChar(new documentModification('Newline', 0, 'INSERT'));
+        sendChar(new documentModification('', 0, 'NEWLINE'));
     } 
   };
 
+  const handleGlobalMessage = (event: MessageEvent) =>{
+    const obj = JSON.parse(event.data);
+    if (obj.operation === "INSERT"){
+      setGlobalText(prev => prev.concat(obj.character));
+    }// } else if (obj.operation === "DELETE"){
+
+    // }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
+    const newValue = e.target.innerHTML || "";
 
     if (
       lastKeyRef.current === 'Backspace' ||
@@ -71,7 +82,7 @@ const WebSocketComponent: React.FC = () => {
 
     setPrevMessage(newValue);
     setMessage(newValue);
-  };
+    };
 
   // Returns deleted characters and their positions
   const getDeletedCharacters = (
@@ -109,23 +120,12 @@ const WebSocketComponent: React.FC = () => {
 
   return (
     <div>
-      <input
-        value={message}
-        onChange={handleChange}
+      <div
+        contentEditable
+        onInput={handleChange}
         onKeyDown={handleKeyDown}
-        placeholder="Type a message"
-      />
-      <button
-        onClick={() => {
-          if (message) {
-            //sendChar(`(full message: "${message}")`);
-            setMessage('');
-            setPrevMessage('');
-          }
-        }}
-      >
-        Send
-      </button>
+      >{globalText}</div>
+      <div>{globalText}</div>
 
       <div>
         <h4>Received Messages:</h4>

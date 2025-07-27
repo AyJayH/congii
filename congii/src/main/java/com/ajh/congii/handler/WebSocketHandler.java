@@ -39,7 +39,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
         // Echo or broadcast to all
         for (WebSocketSession s : sessions) {
             if (s.isOpen()) {
-                s.sendMessage(new TextMessage("Echo: " + message.getPayload()));
+                s.sendMessage(new TextMessage(message.getPayload()));
             }
         }
     }
