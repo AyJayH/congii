@@ -23,3 +23,6 @@ Kafka-backed messaging system for scalable event distribution
 Support for hosting your own Kafka backend or connecting to an existing one
 
 Deployable via Minikube for local testing and development
+
+<img width="1880" height="892" alt="image" src="https://github.com/user-attachments/assets/906f5e40-c16d-4e8d-8dec-8492bffbadc6" />
+
