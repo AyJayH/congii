@@ -24,7 +24,8 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/page/:pageId" element={<PageRequestWrapper />} />
-        <Route path="/page/shared" element={<PageRequest page='shared' />} />
+        {/* <Route path="/page/shared" element={<PageRequest page='shared' />} /> */}
+        <Route path="/page/shared" element={<PageRequest/>} />
         {/* <Route path="" element={<Front />} /> */}
 
 

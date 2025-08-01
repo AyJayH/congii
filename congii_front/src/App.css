@@ -19,3 +19,8 @@
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
